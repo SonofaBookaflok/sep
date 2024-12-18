@@ -220,7 +220,7 @@ int sep_extract(
   infostruct curpixinfo, initinfo, freeinfo;
   objliststruct objlist;
   char newmarker;
-  size_t mem_pixstack;
+  size_t mem_pixstack, object_limit;
   int64_t nposize, oldnposize;
   int64_t w, h;
   int64_t co, i, pstop, xl, xl2, yl, cn;
@@ -599,10 +599,14 @@ int sep_extract(
           }
         }
       } else {
-        if (filter_type == SEP_FILTER_MATCHED) {
-          luflag = ((xl != w) && (sigscan[xl] > relthresh)) ? 1 : 0;
+        if (finalobjlist->nobj < object_limit) {
+          if (filter_type == SEP_FILTER_MATCHED) {
+            luflag = ((xl != w) && (sigscan[xl] > relthresh)) ? 1 : 0;
+          } else {
+            luflag = cdnewsymbol > thresh ? 1 : 0;
+          }
         } else {
-          luflag = cdnewsymbol > thresh ? 1 : 0;
+          luflag = 0
         }
 
         if (luflag) {

@@ -202,6 +202,9 @@ cdef extern from "sep.h":
     void sep_set_extract_pixstack(size_t val)
     size_t sep_get_extract_pixstack()
 
+    void sep_set_extract_object_limit(size_t val)
+    size_t sep_get_extract_object_limit()
+
     void sep_set_sub_object_limit(int val)
     int sep_get_sub_object_limit()
 
@@ -2159,6 +2162,26 @@ def get_extract_pixstack():
     Get the size in pixels of the internal pixel buffer used in extract().
     """
     return sep_get_extract_pixstack()
+
+def set_extract_object_limit(size_t size):
+    """set_extract_object_limit(size)
+
+    Set the max number of objects that can be staretd in extract().
+
+    The current value can be retrieved with get_extract_object_limit. The
+    initial default is 5000.
+    """
+
+    sep_set_extract_object_limit(size)
+
+def get_extract_object_limit():
+    """get_extract_object_limit()
+
+    Get the max number of objects that can be staretd in extract().
+
+    """
+
+    return sep_get_extract_object_limit()
 
 
 def set_sub_object_limit(int limit):
